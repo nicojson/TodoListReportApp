@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tecnm.celaya.edu.mx.todolistreportapp.controller.ExportDialogController">
+    <padding>
+        <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+    </padding>
+    <children>
+        <Label text="Exportar Tareas">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <GridPane hgap="40.0"> <!-- Aumentamos el espacio horizontal -->
+            <children>
+                <!-- Opción PDF -->
+                <VBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <children>
+                        <JFXButton onAction="#exportToPdf" styleClass="share-button">
+                            <graphic>
+                                <FontIcon iconLiteral="mdi2f-file-pdf-box" iconSize="28" iconColor="#D32F2F" />
+                            </graphic>
+                        </JFXButton>
+                        <Label text="PDF" />
+                    </children>
+                </VBox>
+                <!-- Opción XLSX (Excel) -->
+                <VBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <children>
+                        <JFXButton onAction="#exportToXlsx" styleClass="share-button">
+                            <graphic>
+                                <FontIcon iconLiteral="mdi2f-file-excel-box" iconSize="28" iconColor="#1D6F42" />
+                            </graphic>
+                        </JFXButton>
+                        <Label text="XLSX" />
+                    </children>
+                </VBox>
+            </children>
+        </GridPane>
+    </children>
+</VBox>

@@ -30,7 +30,6 @@ application {
     mainClass.set("tecnm.celaya.edu.mx.todolistreportapp.MainApplication")
 }
 
-// Explicitly configure the run task with JVM arguments
 tasks.named<JavaExec>("run") {
     jvmArgs = listOf(
         "--add-opens", "javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix",
@@ -49,15 +48,20 @@ javafx {
 dependencies {
     implementation("com.mysql:mysql-connector-j:9.4.0")
     implementation("org.controlsfx:controlsfx:11.2.1")
-    implementation("com.dlsc.formsfx:formsfx-core:11.6.0") {
-        exclude(group = "org.openjfx")
-    }
-    implementation("net.synedra:validatorfx:0.5.0") {
-        exclude(group = "org.openjfx")
-    }
+    implementation("com.dlsc.formsfx:formsfx-core:11.6.0") { exclude(group = "org.openjfx") }
+    implementation("net.synedra:validatorfx:0.5.0") { exclude(group = "org.openjfx") }
     implementation("org.kordamp.ikonli:ikonli-javafx:12.3.1")
     implementation("org.kordamp.ikonli:ikonli-materialdesign2-pack:12.3.1")
     implementation("com.jfoenix:jfoenix:9.0.10")
+
+    // PDF Generation
+    implementation("com.itextpdf:kernel:7.2.5")
+    implementation("com.itextpdf:layout:7.2.5")
+
+    // XLSX (Excel) Generation
+    implementation("org.apache.poi:poi:5.2.3")
+    implementation("org.apache.poi:poi-ooxml:5.2.3")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }

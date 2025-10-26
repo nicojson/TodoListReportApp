@@ -1,26 +1,37 @@
 module tecnm.celaya.edu.mx.todolistreportapp {
+    // JavaFX
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
-    requires java.sql;
-    requires com.jfoenix;
 
+    // Base de datos
+    requires java.sql;
+
+    // UI & Controls
+    requires com.jfoenix;
     requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.materialdesign2;
 
-    // Abrir paquetes a los módulos que necesitan usar reflexión
+    // iText PDF Generation
+    requires kernel;
+    requires layout;
+    requires java.desktop;
+
+    // Apache POI XLSX Generation
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
+
+    // Abrir paquetes para reflexión
     opens tecnm.celaya.edu.mx.todolistreportapp to javafx.fxml;
     opens tecnm.celaya.edu.mx.todolistreportapp.controller to com.jfoenix, javafx.fxml;
     opens tecnm.celaya.edu.mx.todolistreportapp.model to javafx.base;
 
-    // Exportar paquetes para que sean públicamente utilizables
+    // Exportar paquetes para uso público
     exports tecnm.celaya.edu.mx.todolistreportapp;
     exports tecnm.celaya.edu.mx.todolistreportapp.controller;
     exports tecnm.celaya.edu.mx.todolistreportapp.model;
     exports tecnm.celaya.edu.mx.todolistreportapp.dao;
     exports tecnm.celaya.edu.mx.todolistreportapp.config;
-
+    exports tecnm.celaya.edu.mx.todolistreportapp.service;
 }
