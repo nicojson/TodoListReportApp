@@ -1,0 +1,61 @@
+/*
+ * Estilo para el texto dentro de las celdas de la TableView.
+ * El selector apunta directamente al nodo de texto (.text) dentro de la celda
+ * para anular el estilo por defecto de la hoja de estilos interna de JavaFX (modena.css).
+ */
+#tasksTableView .table-cell .text {
+    -fx-fill: #333333;  /* Usamos -fx-fill para nodos de tipo Text */
+}
+
+/*
+ * Estilo para el texto en las celdas de una fila SELECCIONADA.
+ */
+#tasksTableView .table-row-cell:selected .table-cell .text {
+    -fx-fill: white;
+}
+
+
+/* --- Estilos de Paneles --- */
+.root-pane {
+    -fx-background-color: #FFFFFF;
+}
+
+.main-view-background {
+    -fx-background-color: #F5F5F5;
+}
+
+.footer-pane {
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #E0E0E0;
+}
+
+.header-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+/* --- Estilos de Botones --- */
+.primary-button {
+    -fx-background-color: #FE2C55; /* Color principal tipo TikTok */
+    -fx-text-fill: WHITE;
+}
+
+.success-button {
+    -fx-background-color: #4CAF50; /* Verde */
+    -fx-text-fill: WHITE;
+}
+
+.warning-button {
+    -fx-background-color: #FFC107; /* Amarillo */
+    -fx-text-fill: BLACK;
+}
+
+.danger-button {
+    -fx-background-color: #F44336; /* Rojo */
+    -fx-text-fill: WHITE;
+}
+
+.secondary-button {
+    -fx-background-color: #BDBDBD; /* Gris */
+    -fx-text-fill: WHITE;
+}

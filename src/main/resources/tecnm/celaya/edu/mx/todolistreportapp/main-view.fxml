@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" styleClass="main-view-background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tecnm.celaya.edu.mx.todolistreportapp.controller.MainController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="60.0" styleClass="header-pane">
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+            <children>
+                <Label text="Mis Tareas" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <Label fx:id="welcomeUserLabel" text="Bienvenido, Usuario">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <JFXButton fx:id="logoutButton" onAction="#logout" styleClass="primary-button" text="Cerrar Sesión">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets left="20.0" />
+                    </HBox.margin>
+                </JFXButton>
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="tasksTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="taskNameColumn" prefWidth="200.0" text="Nombre" />
+                <TableColumn fx:id="taskDescriptionColumn" prefWidth="350.0" text="Descripción" />
+                <TableColumn fx:id="taskStatusColumn" prefWidth="120.0" text="Estatus" />
+                <TableColumn fx:id="taskCategoryColumn" prefWidth="120.0" text="Categoría" />
+                <TableColumn fx:id="taskDueDateColumn" prefWidth="150.0" text="Fecha de Vencimiento" />
+            </columns>
+            <BorderPane.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+    <right>
+        <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="15.0" styleClass="root-pane">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <JFXButton fx:id="addButton" maxWidth="1.7976931348623157E308" onAction="#handleAddTask" styleClass="success-button" text="Añadir Tarea">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </JFXButton>
+                <JFXButton fx:id="editButton" maxWidth="1.7976931348623157E308" onAction="#handleEditTask" styleClass="warning-button" text="Editar Tarea">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </JFXButton>
+                <JFXButton fx:id="deleteButton" maxWidth="1.7976931348623157E308" onAction="#handleDeleteTask" styleClass="danger-button" text="Eliminar Tarea">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </JFXButton>
+            </children>
+        </VBox>
+    </right>
+</BorderPane>

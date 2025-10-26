@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="root-pane" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="tecnm.celaya.edu.mx.todolistreportapp.controller.LoginController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+    <children>
+        <Label layoutX="154.0" layoutY="80.0" text="Log in">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <FontIcon iconLiteral="mdi2a-account-circle" iconSize="50" layoutX="175.0" layoutY="150.0" />
+        <JFXTextField fx:id="usernameField" layoutX="75.0" layoutY="200.0" prefWidth="250.0" promptText="Username" />
+        <JFXPasswordField fx:id="passwordField" layoutX="75.0" layoutY="250.0" prefWidth="250.0" promptText="Password" />
+        <JFXButton onAction="#login" layoutX="75.0" layoutY="320.0" prefHeight="40.0" prefWidth="250.0"
+                   styleClass="primary-button" text="Log in">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <Label layoutX="150.0" layoutY="380.0" text="Forgot password?" textFill="#8D8D8D">
+            <font>
+                <Font size="12.0" />
+            </font>
+        </Label>
+        <AnchorPane layoutY="550.0" prefHeight="50.0" prefWidth="400.0" styleClass="footer-pane">
+            <children>
+                <Label layoutX="100.0" layoutY="18.0" text="Don't have an account?" textFill="#8D8D8D" />
+                <Label fx:id="signUpLabel" onMouseClicked="#openRegister" layoutX="250.0" layoutY="18.0" text="Sign up" textFill="#FE2C55">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

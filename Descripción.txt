@@ -1,0 +1,29 @@
+Descripción: 
+Desarrollar una aplicación JavaFX titulada “ToDo List”, la cual permitirá la gestión de tareas o 
+actividades por hacer de una o más personas, considerar los siguientes puntos: 
+1. Al iniciar la aplicación se solicita que el usuario se autentique mediante nombre de usuario y 
+contraseña. 
+2. Una vez autenticado el usuario, este podrá hacer la gestión de sus propias tareas. Los campos que 
+se deben considerar para estas son: id, nombre, descripción, estatus, fecha de vencimiento, fecha 
+de creación. 
+3. A una tarea se le podrán asignar una o más categorías, es decir, durante el proceso de creación 
+de una tarea, el usuario podrá elegir una o más categorías para identificarla más fácilmente. Por 
+ejemplo: si se está dando una tarea llamada “estudiar para examen de cálculo”, se podrían 
+asignar las categorías “ITC” y “Matemáticas”, etc.; si vas a crear una tarea “Cortar el césped”, 
+se podrán asignar las categorías “Casa”, y “Jardinería”, etc. 
+4. Toda la información generada por la aplicación se deberá guardar en una base de datos MySQL. 
+5. La aplicación debe permitir realizar todas las operaciones CRUD sobre la gestión de tareas. 
+6. Agregar la funcionalidad de aplicar filtros o búsquedas para encontrar más fácilmente una tarea. 
+Por ejemplo, se puede colocar un ComboBox para el filtro por categoría y una caja de texto donde 
+se escriba algún valor y se filtren las tareas relacionadas. 
+7. La aplicación debe permitir la exportación y descarga de las tareas con toda su información. El 
+usuario elegirá si las desea en formato PDF o bien XLSX. Permitir generar el reporte de tareas 
+filtrando el listado por categorías y su estatus. 
+8. Generar un gráfico estadístico donde se comparen las cantidades de tareas completadas contra 
+las no completadas y un gráfico más donde se muestre el total de tareas por categoría. Esto se 
+podrá hacer por semana, mes o año. 
+9. Grabar un video de no más de 5 minutos donde se muestre el funcionamiento de la aplicación. 
+10. Documentación con los puntos: portada, introducción, desarrollo, conclusión y referencias 
+bibliográficas. 
+11. Subir evidencias a Google Classroom: código fuente del proyecto, video y documentación. 
+Nota importante: proyectos duplicados o con sospecha de plagio, se anulan. 
