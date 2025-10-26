@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <AnchorPane prefHeight="500.0" prefWidth="500.0" styleClass="root-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tecnm.celaya.edu.mx.todolistreportapp.controller.TaskEditDialogController">
     <stylesheets>
@@ -33,7 +34,7 @@
                 <HBox spacing="20.0">
                     <children>
                         <JFXComboBox fx:id="statusComboBox" labelFloat="true" prefWidth="220.0" promptText="Estatus" />
-                        <JFXComboBox fx:id="categoryComboBox" labelFloat="true" prefWidth="220.0" promptText="Categoría" />
+                        <CheckComboBox fx:id="categoryCheckComboBox" prefWidth="220.0" title="Categorías" />
                     </children>
                 </HBox>
                 <JFXDatePicker fx:id="dueDateDatePicker" defaultColor="#4059A9" promptText="Fecha de Vencimiento" />

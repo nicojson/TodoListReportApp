@@ -5,9 +5,11 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.controlsfx.control.CheckComboBox;
 import tecnm.celaya.edu.mx.todolistreportapp.dao.*;
 import tecnm.celaya.edu.mx.todolistreportapp.model.Categoria;
 import tecnm.celaya.edu.mx.todolistreportapp.model.Tarea;
@@ -15,6 +17,7 @@ import tecnm.celaya.edu.mx.todolistreportapp.model.Usuario;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskEditDialogController {
 
@@ -22,7 +25,7 @@ public class TaskEditDialogController {
     @FXML private JFXTextField nameField;
     @FXML private JFXTextArea descriptionArea;
     @FXML private JFXComboBox<String> statusComboBox;
-    @FXML private JFXComboBox<Categoria> categoryComboBox;
+    @FXML private CheckComboBox<Categoria> categoryCheckComboBox;
     @FXML private JFXDatePicker dueDateDatePicker;
 
     private Stage dialogStage;
@@ -31,18 +34,18 @@ public class TaskEditDialogController {
     private boolean saveClicked = false;
     private TareaDao tareaDao;
     private CategoriaDao categoriaDao;
-    private TareaCategoriaDao tareaCategoriaDao; // Nuevo DAO
+    private TareaCategoriaDao tareaCategoriaDao;
 
     @FXML
     private void initialize() {
         this.tareaDao = new TareaDaoImpl();
         this.categoriaDao = new CategoriaDaoImpl();
-        this.tareaCategoriaDao = new TareaCategoriaDaoImpl(); // Inicializar el nuevo DAO
+        this.tareaCategoriaDao = new TareaCategoriaDaoImpl();
 
         statusComboBox.setItems(FXCollections.observableArrayList("Pendiente", "En Progreso", "Completada"));
 
         List<Categoria> categorias = categoriaDao.findAll();
-        categoryComboBox.setItems(FXCollections.observableArrayList(categorias));
+        categoryCheckComboBox.getItems().addAll(categorias);
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -58,7 +61,7 @@ public class TaskEditDialogController {
             nameField.setText(tarea.getNombre());
             descriptionArea.setText(tarea.getDescripcion());
             statusComboBox.setValue(tarea.getEstatus());
-            // TODO: Cargar y seleccionar la categoría actual de la tarea
+            // TODO: Cargar y seleccionar las categorías actuales de la tarea
             if (tarea.getFechaVencimiento() != null) {
                 dueDateDatePicker.setValue(tarea.getFechaVencimiento().toLocalDate());
             }
@@ -91,12 +94,17 @@ public class TaskEditDialogController {
             }
 
             if (success) {
-                // Asociar la categoría seleccionada
-                Categoria selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
-                if (selectedCategory != null) {
-                    // ¡Aquí está la corrección! Llamamos al nuevo DAO.
-                    tareaCategoriaDao.associate(tarea.getIdTarea(), selectedCategory.getIdCategoria());
+                // Obtener la lista de categorías seleccionadas
+                List<Categoria> selectedCategories = categoryCheckComboBox.getCheckModel().getCheckedItems();
+                
+                // Primero, eliminar todas las asociaciones viejas
+                tareaCategoriaDao.disassociateByTareaId(tarea.getIdTarea());
+                
+                // Luego, crear las nuevas asociaciones
+                for (Categoria cat : selectedCategories) {
+                    tareaCategoriaDao.associate(tarea.getIdTarea(), cat.getIdCategoria());
                 }
+
                 saveClicked = true;
                 dialogStage.close();
             }
