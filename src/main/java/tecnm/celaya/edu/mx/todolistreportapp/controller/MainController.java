@@ -64,16 +64,8 @@ public class MainController {
     private void loadUserTasks() {
         tareasList.clear();
         List<Tarea> userTasks = tareaDao.findByUsuarioId(currentUser.getIdUsuario());
-        
-        // Línea de diagnóstico para ver el valor en el objeto Tarea
-        for (Tarea tarea : userTasks) {
-            System.out.println("[DIAGNÓSTICO Controller] Objeto Tarea: '" + tarea.getNombre() + "', Categorías: '" + tarea.getNombreCategoria() + "'");
-        }
-        
         tareasList.addAll(userTasks);
     }
-
-    // ... (resto de los métodos sin cambios)
 
     @FXML
     void handleAddTask() {
@@ -110,7 +102,7 @@ public class MainController {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 boolean deleted = tareaDao.delete(selectedTask.getIdTarea());
                 if (deleted) {
-                    loadUserTasks(); // Recargar la tabla
+                    loadUserTasks();
                 } else {
                     showAlert(Alert.AlertType.ERROR, "Error de Eliminación", "No se pudo eliminar la tarea", "Ocurrió un error al intentar eliminar la tarea de la base de datos.");
                 }
@@ -123,12 +115,17 @@ public class MainController {
     @FXML
     void logout() {
         try {
-            Stage currentStage = (Stage) welcomeUserLabel.getScene().getWindow();
+            Stage mainStage = (Stage) welcomeUserLabel.getScene().getWindow();
+            mainStage.close();
+
             FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("login-view.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
-            currentStage.setScene(scene);
-            currentStage.setTitle("TodoList App - Login");
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("TodoList App - Login");
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error de Navegación", "No se pudo cargar la pantalla de login", "Ocurrió un error inesperado al intentar cerrar la sesión.");

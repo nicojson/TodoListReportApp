@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" styleClass="main-view-background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tecnm.celaya.edu.mx.todolistreportapp.controller.MainController">
+<BorderPane  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" styleClass="main-view-background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tecnm.celaya.edu.mx.todolistreportapp.controller.MainController">
     <stylesheets>
         <URL value="@style.css" />
     </stylesheets>

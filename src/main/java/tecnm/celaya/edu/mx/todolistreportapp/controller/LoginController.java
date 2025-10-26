@@ -1,5 +1,8 @@
 package tecnm.celaya.edu.mx.todolistreportapp.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
@@ -7,25 +10,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tecnm.celaya.edu.mx.todolistreportapp.MainApplication;
+import tecnm.celaya.edu.mx.todolistreportapp.dao.UsuarioDao;
+import tecnm.celaya.edu.mx.todolistreportapp.dao.UsuarioDaoImpl;
 import tecnm.celaya.edu.mx.todolistreportapp.model.LoginModel;
 import tecnm.celaya.edu.mx.todolistreportapp.model.Usuario;
-import tecnm.celaya.edu.mx.todolistreportapp.dao.UsuarioDaoImpl;
-import tecnm.celaya.edu.mx.todolistreportapp.dao.UsuarioDao;
 
 import java.io.IOException;
 
 public class LoginController {
 
-    @FXML
-    private JFXTextField usernameField;
-
-    @FXML
-    private JFXPasswordField passwordField;
-
-    @FXML
-    private Label signUpLabel;
+    @FXML private StackPane rootPane;
+    @FXML private JFXTextField usernameField;
+    @FXML private JFXPasswordField passwordField;
+    @FXML private Label signUpLabel;
 
     private LoginModel loginModel;
 
@@ -39,33 +40,35 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            System.out.println("Por favor, ingrese usuario y contraseña.");
+            showMaterialDialog("Campos Vacíos", "Por favor, ingrese su nombre de usuario y contraseña.");
             return;
         }
 
         boolean isAuthenticated = loginModel.authenticate(username, password);
 
         if (isAuthenticated) {
-            System.out.println("¡Inicio de sesión exitoso!");
-            
-            // Obtener los datos del usuario para pasarlos a la siguiente pantalla
+            // Obtener la ventana actual (la de login) para cerrarla.
+            Stage loginStage = (Stage) rootPane.getScene().getWindow();
+            loginStage.close();
+
+            // Cargar la vista principal en una nueva ventana.
             UsuarioDao usuarioDao = new UsuarioDaoImpl();
             Usuario currentUser = usuarioDao.findByUsername(username).orElse(null);
 
-            // Cargar la vista principal
             FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
             Parent root = loader.load();
 
-            // Pasar los datos del usuario al controlador de la vista principal
             MainController mainController = loader.getController();
             mainController.initData(currentUser);
 
-            // Mostrar la nueva escena
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Stage mainStage = new Stage();
+            mainStage.setTitle("Mis Tareas - " + currentUser.getNombreUsuario());
+            mainStage.setScene(new Scene(root));
+            mainStage.setMaximized(true); // Maximizar la nueva ventana.
+            mainStage.show();
 
         } else {
-            System.out.println("Error: Usuario o contraseña incorrectos.");
+            showMaterialDialog("Error de Autenticación", "Usuario o contraseña incorrectos.");
         }
     }
 
@@ -74,5 +77,19 @@ public class LoginController {
         Stage stage = (Stage) signUpLabel.getScene().getWindow();
         Parent root = FXMLLoader.load(MainApplication.class.getResource("register-view.fxml"));
         stage.setScene(new Scene(root));
+    }
+
+    private void showMaterialDialog(String heading, String body) {
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text(heading));
+        content.setBody(new Text(body));
+
+        JFXDialog dialog = new JFXDialog(rootPane, content, JFXDialog.DialogTransition.CENTER);
+
+        JFXButton button = new JFXButton("Aceptar");
+        button.setOnAction(event -> dialog.close());
+        content.setActions(button);
+
+        dialog.show();
     }
 }
