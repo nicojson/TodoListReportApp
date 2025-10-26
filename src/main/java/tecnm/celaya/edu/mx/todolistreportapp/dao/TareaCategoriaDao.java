@@ -1,5 +1,9 @@
 package tecnm.celaya.edu.mx.todolistreportapp.dao;
 
+import tecnm.celaya.edu.mx.todolistreportapp.model.Categoria;
+
+import java.util.List;
+
 /**
  * Interfaz DAO para gestionar la tabla pivote Tarea_Categoria.
  */
@@ -14,9 +18,16 @@ public interface TareaCategoriaDao {
     boolean associate(int idTarea, int idCategoria);
 
     /**
-     * (Opcional) Elimina todas las asociaciones de una tarea.
+     * Elimina todas las asociaciones de una tarea.
      * @param idTarea El ID de la tarea.
      * @return true si se eliminaron las asociaciones, false en caso contrario.
      */
     boolean disassociateByTareaId(int idTarea);
+
+    /**
+     * Busca todas las categorías asociadas a una tarea específica.
+     * @param idTarea El ID de la tarea.
+     * @return una Lista de objetos Categoria.
+     */
+    List<Categoria> findCategoriesByTareaId(int idTarea);
 }

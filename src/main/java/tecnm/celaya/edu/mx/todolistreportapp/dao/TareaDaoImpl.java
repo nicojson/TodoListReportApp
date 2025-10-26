@@ -15,14 +15,19 @@ public class TareaDaoImpl implements TareaDao {
         return DatabaseConnection.getConnection();
     }
 
+    // Consulta base que se reutilizará en los métodos de búsqueda.
+    private final String SELECT_QUERY_BASE =
+            "SELECT t.id_tarea, t.id_usuario, t.nombre, t.descripcion, t.estatus, t.fecha_vencimiento, t.fecha_creacion, " +
+            "GROUP_CONCAT(c.nombre SEPARATOR ', ') as nombre_categoria " +
+            "FROM Tareas t " +
+            "LEFT JOIN Tarea_Categoria tc ON t.id_tarea = tc.id_tarea " +
+            "LEFT JOIN Categorias c ON tc.id_categoria = c.id_categoria";
+
     @Override
     public List<Tarea> findByUsuarioId(int usuarioId) {
         List<Tarea> tareas = new ArrayList<>();
-        String sql = "SELECT t.*, GROUP_CONCAT(c.nombre SEPARATOR ', ') as nombre_categoria FROM Tareas t " +
-                     "LEFT JOIN Tarea_Categoria tc ON t.id_tarea = tc.id_tarea " +
-                     "LEFT JOIN Categorias c ON tc.id_categoria = c.id_categoria " +
-                     "WHERE t.id_usuario = ? " +
-                     "GROUP BY t.id_tarea"; // <-- ESTA ES LA LÍNEA CRÍTICA QUE FALTABA
+        String sql = SELECT_QUERY_BASE + " WHERE t.id_usuario = ? GROUP BY t.id_tarea ORDER BY t.fecha_creacion DESC";
+
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, usuarioId);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -38,11 +43,7 @@ public class TareaDaoImpl implements TareaDao {
 
     @Override
     public Optional<Tarea> findById(Integer id) {
-        String sql = "SELECT t.*, GROUP_CONCAT(c.nombre SEPARATOR ', ') as nombre_categoria FROM Tareas t " +
-                     "LEFT JOIN Tarea_Categoria tc ON t.id_tarea = tc.id_tarea " +
-                     "LEFT JOIN Categorias c ON tc.id_categoria = c.id_categoria " +
-                     "WHERE t.id_tarea = ? " +
-                     "GROUP BY t.id_tarea"; // <-- CORRECCIÓN
+        String sql = SELECT_QUERY_BASE + " WHERE t.id_tarea = ? GROUP BY t.id_tarea";
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -59,10 +60,7 @@ public class TareaDaoImpl implements TareaDao {
     @Override
     public List<Tarea> findAll() {
         List<Tarea> tareas = new ArrayList<>();
-        String sql = "SELECT t.*, GROUP_CONCAT(c.nombre SEPARATOR ', ') as nombre_categoria FROM Tareas t " +
-                     "LEFT JOIN Tarea_Categoria tc ON t.id_tarea = tc.id_tarea " +
-                     "LEFT JOIN Categorias c ON tc.id_categoria = c.id_categoria " +
-                     "GROUP BY t.id_tarea"; // <-- CORRECCIÓN
+        String sql = SELECT_QUERY_BASE + " GROUP BY t.id_tarea ORDER BY t.fecha_creacion DESC";
         try (PreparedStatement pstmt = getConnection().prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 tareas.add(mapRowToTarea(rs));
@@ -86,7 +84,7 @@ public class TareaDaoImpl implements TareaDao {
             } else {
                 pstmt.setNull(5, Types.TIMESTAMP);
             }
-            
+
             boolean saved = pstmt.executeUpdate() > 0;
             if (saved) {
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {

@@ -1,5 +1,7 @@
 package tecnm.celaya.edu.mx.todolistreportapp.model;
 
+import java.util.Objects;
+
 /**
  * Clase POJO que representa la entidad 'Categorias' de la base de datos.
  */
@@ -39,5 +41,25 @@ public class Categoria {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    /**
+     * Dos objetos Categoria son iguales si sus IDs son iguales.
+     * Esto es CRUCIAL para que el CheckComboBox pueda encontrar y marcar las categorías correctas.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Categoria categoria = (Categoria) o;
+        return idCategoria == categoria.idCategoria;
+    }
+
+    /**
+     * Siempre que se sobreescribe equals(), se debe sobreescribir hashCode().
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(idCategoria);
     }
 }

@@ -5,7 +5,6 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -17,7 +16,6 @@ import tecnm.celaya.edu.mx.todolistreportapp.model.Usuario;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TaskEditDialogController {
 
@@ -44,8 +42,8 @@ public class TaskEditDialogController {
 
         statusComboBox.setItems(FXCollections.observableArrayList("Pendiente", "En Progreso", "Completada"));
 
-        List<Categoria> categorias = categoriaDao.findAll();
-        categoryCheckComboBox.getItems().addAll(categorias);
+        List<Categoria> todasLasCategorias = categoriaDao.findAll();
+        categoryCheckComboBox.getItems().addAll(todasLasCategorias);
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -61,10 +59,18 @@ public class TaskEditDialogController {
             nameField.setText(tarea.getNombre());
             descriptionArea.setText(tarea.getDescripcion());
             statusComboBox.setValue(tarea.getEstatus());
-            // TODO: Cargar y seleccionar las categorías actuales de la tarea
             if (tarea.getFechaVencimiento() != null) {
                 dueDateDatePicker.setValue(tarea.getFechaVencimiento().toLocalDate());
             }
+
+            // --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
+            // 1. Obtener las categorías ya asociadas a esta tarea.
+            List<Categoria> categoriasAsociadas = tareaCategoriaDao.findCategoriesByTareaId(tarea.getIdTarea());
+            // 2. Marcar las casillas correspondientes en el CheckComboBox.
+            for (Categoria cat : categoriasAsociadas) {
+                categoryCheckComboBox.getCheckModel().check(cat);
+            }
+
         } else { // Modo añadir
             titleLabel.setText("Añadir Nueva Tarea");
             statusComboBox.setValue("Pendiente");
@@ -96,11 +102,11 @@ public class TaskEditDialogController {
             if (success) {
                 // Obtener la lista de categorías seleccionadas
                 List<Categoria> selectedCategories = categoryCheckComboBox.getCheckModel().getCheckedItems();
-                
-                // Primero, eliminar todas las asociaciones viejas
+
+                // Primero, eliminar todas las asociaciones viejas para sincronizar.
                 tareaCategoriaDao.disassociateByTareaId(tarea.getIdTarea());
-                
-                // Luego, crear las nuevas asociaciones
+
+                // Luego, crear las nuevas asociaciones.
                 for (Categoria cat : selectedCategories) {
                     tareaCategoriaDao.associate(tarea.getIdTarea(), cat.getIdCategoria());
                 }
@@ -117,7 +123,6 @@ public class TaskEditDialogController {
     }
 
     private boolean isInputValid() {
-        // ... (validaciones)
         return true;
     }
 }

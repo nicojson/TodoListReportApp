@@ -64,8 +64,16 @@ public class MainController {
     private void loadUserTasks() {
         tareasList.clear();
         List<Tarea> userTasks = tareaDao.findByUsuarioId(currentUser.getIdUsuario());
+        
+        // Línea de diagnóstico para ver el valor en el objeto Tarea
+        for (Tarea tarea : userTasks) {
+            System.out.println("[DIAGNÓSTICO Controller] Objeto Tarea: '" + tarea.getNombre() + "', Categorías: '" + tarea.getNombreCategoria() + "'");
+        }
+        
         tareasList.addAll(userTasks);
     }
+
+    // ... (resto de los métodos sin cambios)
 
     @FXML
     void handleAddTask() {
@@ -115,14 +123,9 @@ public class MainController {
     @FXML
     void logout() {
         try {
-            // Obtener la ventana actual
             Stage currentStage = (Stage) welcomeUserLabel.getScene().getWindow();
-
-            // Cargar la vista de login
             FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("login-view.fxml"));
             Parent root = loader.load();
-
-            // Crear una nueva escena y mostrarla
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
             currentStage.setTitle("TodoList App - Login");
