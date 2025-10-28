@@ -2,19 +2,22 @@ package tecnm.celaya.edu.mx.todolistreportapp.dao;
 
 import tecnm.celaya.edu.mx.todolistreportapp.model.Tarea;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
-/**
- * Interfaz DAO específica para la entidad Tarea.
- * Hereda las operaciones CRUD de la interfaz genérica Dao y añade métodos específicos.
- */
 public interface TareaDao extends Dao<Tarea, Integer> {
 
-    /**
-     * Busca todas las tareas que pertenecen a un usuario específico.
-     * @param usuarioId El ID del usuario cuyas tareas se quieren encontrar.
-     * @return una Lista de todas las tareas del usuario.
-     */
     List<Tarea> findByUsuarioId(int usuarioId);
 
+    Map<String, Integer> getTaskCategoryCounts(int userId, LocalDate startDate, LocalDate endDate);
+
+    /**
+     * Obtiene un mapa con el conteo de tareas para cada estado (Completada, Pendiente, En Progreso).
+     * @param userId El ID del usuario.
+     * @param startDate La fecha de inicio del rango.
+     * @param endDate La fecha de fin del rango.
+     * @return Un Mapa donde la clave es el estado y el valor es el número de tareas.
+     */
+    Map<String, Integer> getTaskCountsByStatus(int userId, LocalDate startDate, LocalDate endDate);
 }

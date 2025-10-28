@@ -34,6 +34,11 @@
                                         <Font name="System Bold" size="24.0" />
                                     </font>
                                 </Label>
+                                <JFXButton fx:id="chartsButton" onAction="#handleShowCharts" text="">
+                                    <graphic>
+                                        <FontIcon iconLiteral="mdi2c-chart-bar" iconSize="24" />
+                                    </graphic>
+                                </JFXButton>
                                 <JFXButton fx:id="exportButton" onAction="#handleExport" text="">
                                     <graphic>
                                         <FontIcon iconLiteral="mdi2s-share-variant" iconSize="24" />

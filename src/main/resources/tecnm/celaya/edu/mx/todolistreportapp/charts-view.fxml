@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tecnm.celaya.edu.mx.todolistreportapp.controller.ChartsController">
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="20.0">
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+            <children>
+                <Label text="Estadísticas de Tareas">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <JFXComboBox fx:id="timeFilterComboBox" prefWidth="150.0" promptText="Filtrar por..." />
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <HBox spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+            </padding>
+            <children>
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Tareas por Estado" />
+                        <PieChart fx:id="statusPieChart" title="" />
+                    </children>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="Tareas por Categoría" />
+                        <BarChart fx:id="categoryBarChart" title="">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT" />
+                            </yAxis>
+                        </BarChart>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </center>
+    <bottom>
+        <VBox spacing="5.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="20.0" />
+            </padding>
+            <children>
+                <Label text="Traza de Diagnóstico (Datos del Gráfico de Barras):" />
+                <TextArea fx:id="diagnosticTextArea" editable="false" prefHeight="100.0" wrapText="true" />
+            </children>
+        </VBox>
+    </bottom>
+</BorderPane>

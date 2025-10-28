@@ -14,7 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane; // <-- ¡LA IMPORTACIÓN QUE FALTABA!
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tecnm.celaya.edu.mx.todolistreportapp.MainApplication;
@@ -165,6 +165,27 @@ public class MainController {
             controller.initData(dialog, filteredTaskList, rootPane);
 
             dialog.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void handleShowCharts() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("charts-view.fxml"));
+            Parent root = loader.load();
+
+            ChartsController controller = loader.getController();
+            controller.initData(currentUser);
+
+            Stage chartsStage = new Stage();
+            chartsStage.setTitle("Estadísticas de Tareas");
+            chartsStage.initModality(Modality.APPLICATION_MODAL);
+            chartsStage.initOwner(rootPane.getScene().getWindow());
+            chartsStage.setScene(new Scene(root));
+            chartsStage.showAndWait();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
